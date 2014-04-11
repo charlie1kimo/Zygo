@@ -1,0 +1,71 @@
+#! !/usr/bin/env python
+# file: omMeas/rtdServer/DbHandler.py
+
+"""
+This file handles output to the database.
+"""
+
+# author: glc
+
+import logging
+import pyodbc
+import time
+
+dbTimestampFormat = "%Y/%m/%d %H:%M:%S"     #mySQL timestamp format
+#dbTimestampFormat = "%d/%b/%Y %H:%M:%S"    #ms access timestamp format
+db = None
+sqlStmt = "INSERT INTO SensorValues VALUES (?,?,?)"
+
+#======================================================================#
+
+def getTimeStr (timeTuple = None):
+    if timeTuple == None:
+        return time.strftime (dbTimestampFormat)
+    else:
+        return time.strftime (dbTimestampFormat, timeTuple)
+
+#======================================================================#
+
+def insertValues(listOfParams):
+##    print ("DbHandler.insertValues (%s)" % str (listOfParams))
+##    return
+
+    global db
+    if db == None:
+        try:
+            db = pyodbc.connect("DSN=OmMeas")
+        except pyodbc.Error,err:
+            print "NIBOX database save failed: %s" % str(err)
+            logging.warning("NIBOX database save failed: %s" %
+                                                    str(err))
+            return
+
+    mycursor = None
+    try:
+        mycursor = db.cursor()
+    except pyodbc.Error, err:
+        print "NIBOX database save failed: %s" % str(err)
+        logging.warning("NIBOX database save failed: %s" % str(err))
+        try:
+            db.close()
+        except pyodbc.Error:
+            pass
+        db = None
+        return
+
+    try:
+        mycursor.executemany (sqlStmt, listOfParams)
+        db.commit()
+    except pyodbc.Error, err:
+        print "NIBOX database save failed: %s" % str(err)
+        logging.warning("NIBOX database save failed: %s" % str(err))
+        try:
+            db.close()
+        except pyodbc.Error:
+            pass
+        db = None
+    finally:
+        try:
+            mycursor.close()
+        except pyodbc.Error:
+            pass

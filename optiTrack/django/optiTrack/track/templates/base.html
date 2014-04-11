@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load compressed %}
+<head>
+	<title>{% block title %} {% endblock %}</title>
+	<!-- Bootstrap CSS -->
+	{% compressed_css 'bootstrap' %}
+</head>
+
+<body>
+	{% block body %} {% endblock %}
+
+	<div class="container">
+		<div id="sidebar">
+			{% block sidebar %}
+			<ul>
+				<li><a href="/track/">HOME</a></li>
+			</ul>
+			{% endblock %}
+		</div>
+	</div>
+
+	<div class="container">
+		<div id="header">
+			{% block header %} {% endblock %}
+		</div>
+	</div>
+
+	<div class="container">
+		<div id="content">
+			{% block content %} {% endblock %}
+		</div>
+	</div>
+
+	<!-- Bootstrap js -->
+	{% compressed_js 'bootstrap' %}
+</body>
+</html>

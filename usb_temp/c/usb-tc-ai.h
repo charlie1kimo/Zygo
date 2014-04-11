@@ -1,0 +1,224 @@
+/*
+ *
+ *  Copyright (c) 2008  Warren Jasper <wjasper@tx.ncsu.edu>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
+
+#ifndef USB_TC_AI_H
+#define USB_TC_AI_H
+
+#ifdef __cplusplus
+extern "C" { 
+#endif 
+
+#define USBTC_AI_PID   (0x00bb)
+#define USBTEMP_AI_PID (0x00bc)
+
+#define DIO_DIR_IN  (0x01)
+#define DIO_DIR_OUT (0x00)
+
+/* Commands and HID Report ID for USB TC-AI and USB TEMP-AI */
+
+// Digital I/O Commands
+#define DCONFIG     (0x01)     // Configure digital port
+#define DCONFIG_BIT (0x02)     // Configure individual digital port bits
+#define DIN         (0x03)     // Read digital port
+#define DOUT        (0x04)     // Write digital port
+#define DBIT_IN     (0x05)     // Read digital port bit
+#define DBIT_OUT    (0x06)     // Write digital port bit
+
+// Analog Input Commands
+#define AIN         (0x18)     // Read input channel
+#define AIN_SCAN    (0x19)     // Read multiple input channels
+
+// Counter Commands
+#define CINIT       (0x20)     // Initialize event counter
+#define CIN         (0x21)     // Read event counter
+
+// Memory Commands
+#define MEM_READ    (0x30)     // Read Memory
+#define MEM_WRITE   (0x31)     // Write Memory
+
+// Miscellaneous Commands
+#define BLINK_LED          (0x40) // Causes LED to blink
+#define RESET              (0x41) // Reset USB interface
+#define GET_STATUS         (0x44) // Get device status
+#define SET_ITEM           (0x49) // Set a configuration item
+#define GET_ITEM           (0x4A) // Get a configuration item
+#define CALIBRATE          (0x4B) // Perform a channel calibration
+#define GET_BURNOUT_STATUS (0x4C) // Get thermocouple burnout detection status
+#define CAL_CONFIG         (0x4D) // Configure Calibration MUX
+#define CAL_STEPS          (0x4E) // Retreive number of steps in calibration sequence
+
+// Code Update Commands
+#define PREPARE_DOWNLOAD (0x50) // Prepare for program memory download
+#define WRITE_CODE       (0x51) // Write program memory
+#define WRITE_SERIAL     (0x53) // Write a new serial number to device
+#define READ_CODE        (0x55) // Read program memory
+
+// Alarm Commands
+#define CONFIG_ALARM     (0x6B) // Configure temperature and voltage alarm
+#define GET_ALARM_CONFIG (0x6C) // Read current alarm configuration
+
+// Channels
+#define CH0  (0x0)  // Input 0 Temperature
+#define CH1  (0x1)  // Input 1 Temperature
+#define CH2  (0x2)  // Input 2 Temperature
+#define CH3  (0x3)  // Input 3 Temperature
+#define CH4  (0x4)  // Input 4 Voltage
+#define CH5  (0x5)  // Input 5 Voltage
+#define CH6  (0x6)  // Input 6 Voltage
+#define CH7  (0x7)  // Input 7 Voltage
+#define CJC0 (0x80) // Cold Junction Compensator (ch 0-3) Temperature
+
+
+// Configuration Items
+#define ADC_0 (0x0)  // Setting for ADC 0
+#define ADC_1 (0x1)  // Setting for ADC 1
+#define ADC_2 (0x2)  // Setting for ADC 2
+#define ADC_3 (0x3)  // Setting for ADC 3
+
+// Sub Items
+#define SENSOR_TYPE     (0x00) // Sensor type  Read Only
+#define CONNECTION_TYPE (0x01) // Connection type - RTD & Thermistor
+#define FILTER_RATE     (0x02) // Filter update rate
+#define EXCITATION      (0x03) // Currect excitation
+#define VREF            (0x04) // Measured Vref value
+#define I_value_0       (0x05) // Measured I value @ 10uA
+#define I_value_1       (0x06) // Measured I value @ 210uA
+#define I_value_2       (0x07) // Measured I value @ 10uA (3 wire connection)
+#define V_value_0       (0x08) // Measured V value @ 10uA
+#define V_value_1       (0x09) // Measured V value @ 210uA
+#define V_value_2       (0x0a) // Measured V value @ 210uA (3 wire connection)
+#define CH_0_TC         (0x10) // Thermocouple type for channel 0
+#define CH_1_TC         (0x11) // Thermocouple type for channel 1
+#define CH_0_GAIN       (0x12) // Channel 0 gain value
+#define CH_1_GAIN       (0x13) // Channel 1 gain value
+#define CH_0_COEF_0     (0x14) // Coefficient 0
+#define CH_1_COEF_0     (0x15) // Coefficient 0
+#define CH_0_COEF_1     (0x16) // Coefficient 1
+#define CH_1_COEF_1     (0x17) // Coefficient 1
+#define CH_0_COEF_2     (0x18) // Coefficient 2
+#define CH_1_COEF_2     (0x19) // Coefficient 2
+#define CH_0_COEF_3     (0x1a) // Coefficient 3
+#define CH_1_COEF_3     (0x1b) // Coefficient 3
+#define CH_0_VOLT_CONN  (0x1c) // Select input type for ADC 2&3 channel 0
+#define CH_1_VOLT_CONN  (0x1d) // Select input type for ADC 2&3 channel 1
+
+// Possible Values
+#define RTD           (0x0)
+#define THERMISTOR    (0x1)
+#define THERMOCOUPLE  (0x2)
+#define SEMICONDUCTOR (0x3)
+#define DISABLED      (0x4)
+#define VOLTAGE       (0x5)
+
+#define FREQ_500_HZ   (0x1)
+#define FREQ_250_HZ   (0x2)
+#define FREQ_125_HZ   (0x3)
+#define FREQ_62_5_HZ  (0x4)
+#define FREQ_50_HZ    (0x5)
+#define FREQ_39_2_HZ  (0x6)
+#define FREQ_33_3_HZ  (0x7)
+#define FREQ_19_6_HZ  (0x8)
+#define FREQ_16_7_HZ  (0x9)
+//#define FREQ_16_7_HZ  (0xa)
+#define FREQ_12_5_HZ  (0xb)
+#define FREQ_10_HZ    (0xc)
+#define FREQ_8_33_HZ  (0xd)
+#define FREQ_6_25_HZ  (0xe)
+#define FREQ_4_17_HZ  (0xf)
+
+#define TYPE_J        (0x0)
+#define TYPE_K        (0x1)
+#define TYPE_T        (0x2)
+#define TYPE_E        (0x3)
+#define TYPE_R        (0x4)
+#define TYPE_S        (0x5)
+#define TYPE_B        (0x6)
+#define TYPE_N        (0x7)
+
+#define GAIN_1X       (0x0)
+#define GAIN_2X       (0x1)
+#define GAIN_4X       (0x2)
+#define GAIN_8X       (0x3)
+#define GAIN_16X      (0x4)
+#define GAIN_32X      (0x5)
+#define GAIN_64X      (0x6)
+#define GAIN_128X     (0x7)
+
+/* Voltage gain values */
+#define BP_10V     GAIN_4X  // +/- 10.0 V
+#define BP_5V      GAIN_8X  // +/- 5.00 V
+#define B_2_5V     GAIN_16X // +/- 2.50 V
+#define B_1_25V    GAIN_32X // +/- 1.25 V
+
+/* For connection types RTD & thermistor */
+#define TWO_WIRE_ONE_SENSOR (0x0)
+#define TWO_WIRE_TWO_SENSOR (0x1)
+#define THREE_WIRE          (0x2)
+#define FOUR_WIRE           (0x3)
+
+/* Current excitation values */
+#define EXCITATION_OFF       (0x0)
+#define MU_A_10              (0x1)  //  10 micro Amps
+#define MU_A_210             (0x2)  // 210 micro Amps
+
+/* ADC Connection types */
+#define DIFFERENTIAL  (0x0)
+#define SINGLE_ENDED  (0x1)
+#define GROUNDED      (0x2)
+#define CALIBRATION   (0x3)
+
+#define CHAN_HI_PATH (0x0)
+#define CHAN_LO_PATH (0x1)
+
+/* function prototypes for the USB-TC */
+void usbDConfigPort_USBTC_AI(int fd, __u8 direction);
+void usbDConfigBit_USBTC_AI(int fd, __u8 bit_num, __u8 direction);
+void usbDIn_USBTC_AI(int fd, __u8* value);
+void usbDInBit_USBTC_AI(int fd, __u8 bit_num, __u8* value);
+void usbDOut_USBTC_AI(int fd, __u8 value);
+void usbDOutBit_USBTC_AI(int fd, __u8 bit_num, __u8 value);
+void usbInitCounter_USBTC_AI(int fd);
+__u32 usbReadCounter_USBTC_AI(int fd);
+void usbAin_USBTC_AI(int fd, __u8 channel, __u8 units, float *value);
+void usbAinScan_USBTC_AI(int fd, __u8 start_chan, __u8 end_chan, __u8 units, float value[]);
+
+void usbReadMemory_USBTC_AI(int fd, __u16 address, __u8 type, __u8 count, __u8 memory[]);
+int usbWriteMemory_USBTC_AI(int fd, __u16 address, __u8 type, __u8 count, __u8 data[]);
+int usbBlink_USBTC_AI(int fd);
+int usbReset_USBTC_AI(int fd);
+__u8 usbGetStatus_USBTC_AI(int fd);
+void usbSetItem_USBTC_AI(int fd, __u8 item, __u8 subitem, float fValue);
+void usbSetItem_USBTEMP_AI(int fd, __u8 item, __u8 subitem, float fValue);
+void usbGetItem_USBTC_AI(int fd, __u8 item, __u8 subitem, void* value);
+void usbCalibrate_USBTC_AI(int fd, __u8 type);
+__u8  usbGetBurnoutStatus_USBTC_AI(int fd, __u8 mask);
+void usbPrepareDownload_USBTC_AI(int fd, __u8 micro);
+void usbWriteCode_USBTC_AI(int fd, __u32 address, __u8 count, __u8 data[]);
+int usbReadCode_USBTC_AI(int fd, __u32 address, __u8 count, __u8 data[]);
+void usbWriteSerial_USBTC_AI(int fd, __u8 serial[8]);
+void usbCalConfig_USBTC_AI(int fd, __u8 gain, __u8 polarity, __u8 path);
+void usbGetCalSteps_USBTC_AI(int fd, __u8 steps[2]);
+void usbConfigAlarm_USBTC_AI(int fd, __u8 number, __u8 in_options, __u8 out_options, float value_1, float value_2);
+void usbGetAlarmConfig_USBTC_AI(int fd, __u8 number, __u8 *in_options, __u8 *out_options, float *value_1, float *value_2);
+
+#ifdef __cplusplus
+} /* closing brace for extern "C" */
+#endif
+
+#endif //USB_TC_AI_H

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Traveler's Form setup{% endblock %}
+
+{% block header %}
+	{% if error %}
+		<p><strong>{{ error }}</strong></p>
+	{% endif %}
+	<h3>Please enter the number of rows you have in traveler's form.</h3>
+{% endblock %}
+
+{% block content %}
+	{% crispy setupForm %}
+{% endblock %}

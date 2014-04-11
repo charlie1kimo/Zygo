@@ -1,0 +1,54 @@
+    !  Author:  Sam Hardy
+    !  Date 3/20/14
+    !  Prelim MetroScript to automate collection of 5-field data to align POB
+    !  Called once per field position
+    
+    !-------------Values below to be read from Charlie Chen's program---------------
+    
+    !Open Charlie's file to read-only
+    assign @CharlieFile to "PATH\CHARLIEFILE.PY" "r"
+    
+    !Assign variables
+    enter @CharlieFile; a, b, c, d, e
+    
+    xfield% = a  !x field pos in microns (ex 1000)
+    yfield% = b  !y field pos in microns (ex -1000)
+    pobrot% = c  !POB rotation angle.  Nominal is 0
+    numavg% = d    !Phase averages.  Nominal is 128
+    savname$ = e  !String of file name to save as ex 'ap2bg_2_1000_-1000_3.dat'
+    
+    !Close Charlie's file
+    assign @CharlieFile to ""    
+    
+    !-------------Values above to be read from Charlie Chen program---------------
+    
+
+    pobpath$ = "C:\\surdirs\\MET5\\POB\\RGEN"
+    setdir("Data",pobpath$)
+    
+    
+    !Load proper mask for field pos
+    loadmasks(pobpath$ & "\\" & "ffmas_" & val$(pobrot%) & "_" & val$(xfield%) & "_" & val$(yfield%) ".mas")    
+    
+    
+    !Load proper fids for field pos
+    !CAN'T FIGURE OUT HOW TO DO THIS YET
+    
+    
+    !  Pick # of phase averages
+    idphavg = getid("controls/phase processing/phase avgs:")
+    setstr(idphavg, val$(numavg%))
+
+    !Take and save data
+    measure
+    savedata(0,pobpath$ & "\\" & savname$)
+   
+
+    message(" Measurement complete move to next field pos ",1,1)
+    TheEnd:
+    
+    !Output "Done" message to append Charlie's program and close it
+    assign @CharlieFile to "PATH\CHARLIEFILE.PY" "a"
+    output @CharlieFile; "Done"
+    
+    end

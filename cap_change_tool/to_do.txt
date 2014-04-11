@@ -1,0 +1,6 @@
+"""
+TO DO:
+
+1. threading issue:
+	stop background motor moving thread when closing the application
+"""

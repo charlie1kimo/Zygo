@@ -1,0 +1,41 @@
+move_amount = [0.5 0.6 0.7]
+
+move()
+--> start_cap = [0, 0, 0]
+--> legChange()
+	leg1: 
+		iter 1:
+			--> leg1 --> read leg1 = 0
+			--> target = 0 + 0.5
+			--> move leg1 0.5
+			--> actual move leg1 0.3
+		iter2:
+			--> leg1 --> read leg1 = 0.3
+			--> delta move = 0.2 (try to move 0.2 leg1)
+			--> move 0.2 leg1
+			--> actual move 0.2
+		done leg1
+
+	leg2:
+		iter 1:
+			--> leg2 --> read leg2 = 0.15
+			--> target = 0.15 + 0.6
+			--> to move leg2 0.75
+			--> actual move leg2 = 0.3
+		iter2:
+			--> leg2 --> read leg2 cap position = 0.45
+			--> delta move = 0.3 (try to move 0.3 leg2)
+			--> move 0.3 leg2
+			--> actual move 0.3
+		done leg2
+	...
+
+--> capGaugeChange()
+	iter1:
+		leg1:
+			--> read position() = 0.4
+			--> target = 0.5
+			--> target move = 0.1
+			--> actual move = 0.1
+		leg2:
+			--> ...

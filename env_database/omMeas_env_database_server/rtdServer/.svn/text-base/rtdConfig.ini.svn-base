@@ -1,0 +1,220 @@
+# OML rtd config file
+#file rtdConfig.ini
+
+[Server]
+# What port should we listen to?
+port: 6217
+# How often do we poll the non-nibox probes?
+PollFreq: 300
+# Which Thermometer do we use to calibrate the Temperature Probes?
+#Thermometer: OmegaDp251
+
+
+[Database]
+DSN: OmMeas
+#Name: 
+#User:
+#Password:
+#Port:
+#Table:
+#Freq:
+
+
+[niBox1]
+name: TR4
+address: rotr4tmp
+port: 2055
+#   these 4 values used by Calibration; take care modifying them
+#masterDir: remote NI-RT
+masterDir: local N:\Shared\ENG\EnvironmentServers
+masterFile: ni_rotr4tmp.INI
+backupFile: ni_rotr4tmp.OLD
+# "targetDir" and "targetFile" are ignored if masterDir is remote
+targetFile: tmp_Mon_cfg.INI
+targetDir: NI-RT
+
+
+[niBox2]
+name: TR5
+address: rotr1tmp
+port: 2055
+#   these 4 values used by Calibration; take care modifying them
+#masterDir: remote NI-RT
+masterDir: local N:\Shared\ENG\EnvironmentServers
+masterFile: ni_rotr1tmp.INI
+backupFile: ni_rotr1tmp.OLD
+# "targetDir" and "targetFile" are ignored if masterDir is remote
+targetFile: tmp_Mon_cfg.INI
+#targetFile: deleteMe.INI
+targetDir: NI-RT
+
+
+[probes]
+# probe names can be anything but is assumed to be of the format
+#	<stationName>.<role>.<index>
+# probe value is assumed to be <niBoxName>.<board#>.<channel#>
+
+TR5-3.Cavity.1: TR5.0.0
+TR5-3.Cavity.2: TR5.0.1
+TR5-3.Cavity.3: TR5.0.2
+TR5-3.Cavity.4: TR5.0.3
+TR5-3.Cavity.5: TR5.0.4
+
+[wires]
+# wire names can be anything but is assumed to be of the format
+#	<testcell>.<table>.<index>
+# wire value is same as in the probe section
+TR5-3-1: TR5.0.0
+TR5-3-2: TR5.0.1
+TR5-3-3: TR5.0.2
+TR5-3-4: TR5.0.3
+TR5-3-5: TR5.0.4
+
+MR-1-1: TR5.0.5
+MR-1-2: TR5.0.6
+MR-1-3: TR5.0.7
+MR-1-4: TR5.0.8
+MR-1-5: TR5.0.9
+
+
+# This section is being replaced with the Thermometer option is the
+# Server section
+#[Thermometer]
+#OmegaDp251: RS232 1
+#OmegaDp251: TCP rotr5sr1:2000
+
+
+[Pressure]
+mensor: Mensor2400
+newport: NewportIbthxTR5
+newportTR1: NewportIbthxTR1
+newportTR2: NewportIbthxTR2
+newportTR3: NewportIbthxTR3
+random: default 666
+range: 725,780
+
+
+[Humidity]
+newport: NewportIbthxTR5
+newportTR1: NewportIbthxTR1
+newportTR2: NewportIbthxTR2
+newportTR3: NewportIbthxTR3
+range: 10,90
+
+[Temperature]
+#	also list the "unused" temperature probes so the GetAllWeather
+#	request will return each value.
+#omega: OmegaDp251
+newPort: NewportIbthxTR5
+newportTR1: NewportIbthxTR1
+newportTR2: NewportIbthxTR2
+newportTR3: NewportIbthxTR3
+
+TR5-3.Cavity.1: nibox
+TR5-3.Cavity.2: nibox
+TR5-3.Cavity.3: nibox
+TR5-3.Cavity.4: nibox
+TR5-3.Cavity.5: nibox
+
+random: default 23.456 +/-.15% 0.5
+range: 15,30
+
+
+#now the stations
+[Station5.3]
+Name: TR5-3
+temperature: TR5-3.Cavity.1, TR5-3.Cavity.2, TR5-3.Cavity.3, TR5-3.Cavity.4, TR5-3.Cavity.5
+Pressure: mensor
+Humidity: newport
+
+[Station5.4]
+Name: TR5-4
+# TODO: table 4 will need its own sensors, not table 3's.
+temperature: TR5-3.Cavity.1, TR5-3.Cavity.2, TR5-3.Cavity.3, TR5-3.Cavity.4, TR5-3.Cavity.5
+Pressure: mensor
+Humidity: newport
+
+[StationTR1]
+Name: TR1
+temperature: newportTR1
+Pressure: newportTR1
+Humidity: newportTR1
+
+[StationBeta]
+Name: Beta
+temperature: newportTR1
+Pressure: newportTR1
+Humidity: newportTR1
+
+[StationGamma]
+Name: Gamma
+temperature: newportTR1
+Pressure: newportTR1
+Humidity: newportTR1
+
+[StationDelta]
+Name: Delta
+temperature: newportTR1
+Pressure: newportTR1
+Humidity: newportTR1
+
+[Station2]
+Name: TR2
+temperature: newportTR2
+Pressure: newportTR2
+Humidity: newportTR2
+
+[StationEta]
+Name: Eta
+temperature: newportTR2
+Pressure: newportTR2
+Humidity: newportTR2
+
+[StationEpsilon]
+Name: Epsilon
+temperature: newportTR2
+Pressure: newportTR2
+Humidity: newportTR2
+
+[StationZeta]
+Name: Zeta
+temperature: newportTR2
+Pressure: newportTR2
+Humidity: newportTR2
+
+[Station3]
+Name: TR3
+temperature: newportTR3
+Pressure: newportTR3
+Humidity: newportTR3
+
+
+# RS232 addresses are of the format
+#	RS232 <comport>[ <baudrate>[ <databits><parity><stopbits>]]
+# TCP addresses are of the format
+#	TCP <host>:<port>
+[Mensor2400]
+#Mensor 2400 digital barometer
+address: RS232 1
+#address: TCP rotr5sr1:2000
+
+#[OmegaDp251]
+#Omega DP251 digital thermometer
+##address: RS232 1
+#address: TCP rotr5sr1:2000
+
+[NewportIbthxTR5]
+#Test room 5 Newport iBTHX digital Thermometer/Barometer/Hygrometer
+address: TCP rotr5wx1:2000
+
+[NewportIbthxTR1]
+#Test room 1 Newport iBTHX digital Thermometer/Barometer/Hygrometer
+address: TCP rotr1wx1:2000
+
+[NewportIbthxTR2]
+#Test room 2 Newport iBTHX digital Thermometer/Barometer/Hygrometer
+address: TCP rotr2wx1:2000
+
+[NewportIbthxTR3]
+#Test room 3 Newport iBTHX digital Thermometer/Barometer/Hygrometer
+address: TCP rotr3wx1:2000

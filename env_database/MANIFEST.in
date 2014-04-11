@@ -1,0 +1,2 @@
+include *.txt
+recursive-include env_database/env_plots2/icons *.jpg *.ico

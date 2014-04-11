@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Department{% endblock %}
+
+{% block sidebar %}
+	<a href="{% url 'track.views.index' %}">HOME</a>
+{% endblock %}
+
+{% block header %}
+	<h3>List of Departments:</h3>
+{% endblock %}
+
+{% block content %}
+	{% if listObjs %}
+		<table border='1'>
+			<tr>
+			<th>ID</th>
+			<th>Code</th>
+			<th>Number</th>
+			<th>Description</th>
+			</tr>
+		
+			{% for o in listObjs %}
+				<tr>
+					<td>{{ o.deptid }}</td>
+					<td>{{ o.deptcode}}</td>
+					<td>{{ o.deptnum}}</td>
+					<td>{{ o.deptdescription}}</td>
+				</tr>
+			{% endfor %}
+		</table>
+	{% else %}
+		<p>No Department information is available.</p>
+	{% endif %}
+{% endblock %}

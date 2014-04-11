@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Optitrack Information System{% endblock %}
+
+{% block sidebar %}
+	<h1>Optitrack Information System</h1>
+{% endblock %}
+	
+{% block header %}
+	<p>
+		Welcome to the Optitrack Web tracking System!<br>
+		Below are some of the useful links:
+	</p>
+{% endblock %}
+
+{% block content %}
+	<ul>
+		<li><a href="{% url 'track.views.departments' %}">List of Departments</a></li>
+		<li><a href="{% url 'track.views.employee' %}">List of Employees</a></li>
+		<li><a href="{% url 'track.views.addEmployee' %}">Add a new Employee</a></li>
+		<li><a href="{% url 'track.views.travelerSetupForm' %}">Traveler Form</a></li>
+	</ul>
+{% endblock %}

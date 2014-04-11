@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}add employee{% endblock %}
+
+{% block sidebar %}
+	<a href="{% url 'track.views.index' %}">HOME</a>
+{% endblock %}
+
+{% block header %}
+	{% if errors %}
+		<p><strong>The following Errors have occured:</strong></p>
+		<ul>
+		{% for error in errors %}
+			<li>{{ error }}</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+
+	{% if added %}
+	<h3>The Following employee has been added to the database:</h3>
+		<table border='1'>
+		<tr>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Department</th>
+		</tr>
+		<tr>
+			<td>{{ added.0 }}</td>
+			<td>{{ added.1 }}</td>
+			<td>{{ added.2 }}</td>
+		</tr>
+	</table>
+	<br>
+	{% endif %}
+
+	<h2>Add A New Employee:</h2>
+{% endblock %}
+
+{% block content %}
+	<form action="/track/addemployee/", method="post">
+		{% csrf_token %}
+		<table border='1'>
+			<tr>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Department</th>
+			</tr>
+
+			<tr>
+				<td><input type="text" name="firstname"></td>
+				<td><input type="text" name="lastname"></td>
+				<td>
+					<select name="department">
+						{% for dept in deptList %}
+							<option value="{{ dept.deptnum }}">{{ dept.deptdescription }}</option>
+						{% endfor %}
+					</select>
+				</td>
+			</tr>
+		</table>
+		<input type="submit" value="Add!" />
+	</form>
+{% endblock %}

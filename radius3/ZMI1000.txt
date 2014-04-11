@@ -1,0 +1,126 @@
+self.DMI_CONTROL_CODES = {"ZMI1000":{"Zero": "*RST\n",
+					"Initialize": "RESTART\n",
+					"Clear": "*CLS\n",
+					"AVG": "AV?\n",
+					"POLL": "*STB?\n",
+					"SAMPLE": "SAM %d,%d,%c\n",
+					"READ": "R? 1,G\n"}}
+
+[dmi_info]
+com_info.com_port = COM3
+com_info.baud_rate = 9600
+com_info.data_bits = EIGHTBITS
+com_info.parity = PARITY_NONE
+com_info.stop_bits = STOPBITS_TWO
+com_info.timeout = 10
+
+self.serialCom = serial.Serial(port=self.params.com_info.com_port,
+				baudrate=self.params.com_info.baud_rate,
+				bytesize=eval("serial."+self.params.com_info.data_bits),
+				parity=eval("serial."+self.params.com_info.parity),
+				stopbits=eval("serial."+self.params.com_info.stop_bits),
+				timeout=self.params.com_info.timeout,
+				xonxoff=False,
+				rtscts=self.rtscts,
+				writeTimeout=None,
+				dsrdtr=self.dsrdtr,
+				interCharTimeout=None)
+
+### DMI testing: ###
+
+import serial
+
+ser = serial.Serial('COM3', 9600, serial.EIGHTBITS, serial.PARITY_NONE, serial.STOPBITS_TWO, 5)
+ser.write("RESTART\n")
+ser.inWaiting()
+ser.write("*CLS\n")
+ser.inWaiting()
+ser.write("SAM 1,100,M\n")
+ser.inWaiting()
+ser.write("AV?\n")
+
+
+PhaseStation testing:
+
+
+
+self.CONTROL_CODES = {"OpticodePCS":{"GO": "GO",
+				"FAULT": "FT",
+				"GETFILE": "GF,%s\n",
+				"LOADFILE": "CF,%s,%s\n",
+				"CALIBRATE": "GC",
+				"LOADCONFIG": "CL,%s\n",
+				"TAGLINE": "TL %s %s\n",
+				"SAVECONFIG": "CS,%s\n"}}
+											
+self.RESPONSE_CODES = {"OpticodePCS":{"RE": "Ready for next command",
+				"EX": "Operator Exited Remote Mode",
+				"MA": "Operator Makes Manual Measurement",
+				"DN": "Done Acquiring",
+				"PA": "Measurement Passed Specifications",
+				"FA": "Measurement Failed Specifications",
+				"ER": "Error with Error Code"}}
+
+
+
+sample report format:
+'DN   Date    ,   Time  ,        Title        ,       Part ID       ,       Oper \
+ator      ,       Customer      ,    Peak (wv)    ,   Valley (wv)   ,     PV (wv \
+)     ,     RMS (wv)    ,      Strehl     ,      Wedge      ,   WaveLen (um)  , \
+     Points     ,   Length (nu)   ,    Width (nu)   ,     ROC (mm)    ,  Tool Er \
+ror (wv),  Tilt Mag (wv)  ,  Tilt Ang (deg) ,    Focus (wv)   ,  Astg Mag (wv) \
+,  Astg Ang (deg) ,  Coma Mag (wv)  ,  Coma Ang (deg) ,   Sphere (wv)   ,   Fit \
+Err (wv)  ,      Z1 (wv)    ,      Z2 (wv)    ,      Z3 (wv)    ,      Z4 (wv) \
+  ,      Z5 (wv)    ,      Z6 (wv)    ,      Z7 (wv)    ,      Z8 (wv)    , \
+ Z9 (wv)    ,     Z10 (wv)    ,     Z11 (wv)    ,     Z12 (wv)    ,     Z13 (wv) \
+    ,     Z14 (wv)    ,     Z15 (wv)    ,     Z16 (wv)    ,     Z17 (wv)    , \
+  Z18 (wv)    ,     Z19 (wv)    ,     Z20 (wv)    ,     Z21 (wv)    ,     Z22 (w \
+v)    ,     Z23 (wv)    ,     Z24 (wv)    ,     Z25 (wv)    ,     Z26 (wv)    , \
+    Z27 (wv)    ,     Z28 (wv)    ,     Z29 (wv)    ,     Z30 (wv)    ,     Z31 \
+(wv)    ,     Z32 (wv)    ,     Z33 (wv)    ,     Z34 (wv)    ,     Z35 (wv) \
+,     Z36 (wv)    ,  Focus Mag (wv) ,Comment \
+                                                          \n12-18-2012 ,17:07:27 \
+ ,                     ,                     ,                     , \
+         ,           0.2374,          -0.2161,           0.4535,           0.128 \
+9,           0.5191,           0.5000,           0.6328,          64.0000, \
+     0.6279,           1.9031,           0.0000,           0.0000,           0.5 \
+225,        -110.7692,           0.0072,           0.6635,         -85.3663, \
+       1.2613,         -86.1325,           1.4188,           0.0000,          -0 \
+.1853,          -0.4885,           0.0036,          -0.3274,          -0.0534, \
+         0.0284,          -0.4195,           0.2365,           0.0000, \
+ 0.0000,           0.0000,           0.0000,           0.0000,           0.0000, \
+           0.0000,           0.0000,           0.0000,           0.0000, \
+   0.0000,           0.0000,           0.0000,           0.0000,           0.000 \
+0,           0.0000,           0.0000,           0.0000,           0.0000, \
+     0.0000,           0.0000,           0.0000,           0.0000,           0.0 \
+000,           0.0000,           0.0000,           0.0000,           0.0000, \
+      -1.4117, \
+                                   \n\x04RE'
+
+
+### Phase Station test ###
+
+import serial
+
+ser = serial.Serial('COM4', 9600, serial.EIGHTBITS, serial.PARITY_NONE, serial.STOPBITS_TWO, 10)
+# go
+ser.write("GO")
+ser.inWaiting()
+r = ser.recv(ser.inWaiting())
+
+# fault
+ser.write("FT")
+# loadfile
+ser.write("CF,ce_cfg.cfg,F\n")
+# calibrate
+ser.write("GC")
+# loadconfig
+ser.write("CL,F\n")
+# tagline
+ser.write("TL 4530 1\n")
+ser.write("1000.0")
+ser.write('\x04\x03')
+# saveconfig
+ser.write("CS,zzztest.cfg\n")
+
+

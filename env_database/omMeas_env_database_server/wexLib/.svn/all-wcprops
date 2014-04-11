@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/omase/!svn/ver/204/src/omMeas/trunk/omMeas/wexLib
+END
+wsp.py
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/omase/!svn/ver/204/src/omMeas/trunk/omMeas/wexLib/wsp.py
+END
+Mensor2400Barometer.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/omase/!svn/ver/118/src/omMeas/trunk/omMeas/wexLib/Mensor2400Barometer.py
+END
+DiconGp700Switch.py
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/omase/!svn/ver/105/src/omMeas/trunk/omMeas/wexLib/DiconGp700Switch.py
+END
+FederalLVDT.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/omase/!svn/ver/121/src/omMeas/trunk/omMeas/wexLib/FederalLVDT.py
+END
+NewportIbthx.py
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/omase/!svn/ver/119/src/omMeas/trunk/omMeas/wexLib/NewportIbthx.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/omase/!svn/ver/51/src/omMeas/trunk/omMeas/wexLib/__init__.py
+END
+Device.py
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/omase/!svn/ver/204/src/omMeas/trunk/omMeas/wexLib/Device.py
+END
+OmegaDp251Thermometer.py
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/omase/!svn/ver/118/src/omMeas/trunk/omMeas/wexLib/OmegaDp251Thermometer.py
+END
+asynSched.py
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/omase/!svn/ver/33/src/omMeas/trunk/omMeas/wexLib/asynSched.py
+END
+nio.py
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/omase/!svn/ver/62/src/omMeas/trunk/omMeas/wexLib/nio.py
+END

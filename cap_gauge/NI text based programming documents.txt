@@ -1,0 +1,3 @@
+National Instrument Text Based Programming using NI-DAQmx:
+http://www.ni.com/white-paper/5409/en
+

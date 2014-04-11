@@ -1,0 +1,59 @@
+    !  Author:  Sam Hardy
+    !  Date 3/20/14
+    !  Prelim MetroScript to initialize MetroPro for 5-field data collection
+    !  Called once before collecting data
+
+    
+    ! Initialization of MetroPro for measurement (from Neil's Autosetup_i.scr)
+    goto Autosetup
+    Autosetupdone:
+  
+    !-----------------------------------------------------
+
+    Autosetup:
+        !  Automatic Controls
+
+        !  Choose terms to remove during data analysis
+        idrem = getid("controls/Remove:")
+        setstr(idrem, "PST") !TLT PWR AST CMA SA3")
+
+
+        !  Set Subtract Sys Err to OFF
+        idsyserr = getid("controls/system error/subtract sys err:")
+        setnum(idsyserr, 0, " ")
+
+
+        !Set light intensity to 90%
+        idi = getid("controls/acquisition/light level pct:")
+        setstr(idi, 90.0)
+
+
+        !Set Min Mod Pct to 7
+        idmmp = getid("controls/acquisition/min mon (%):")
+        setstr(idmmp, 7)
+
+
+        !Set PZT Gain to 75
+        idpztg = getid("controls/acquisition/pzt gain:")
+        setstr(idpztg, 75)
+
+
+        !Set iris size to 4mm
+        ! NOT SURE HOW TO SET THIS
+
+
+        !Set AGC to OFF
+        idAGC = getid("controls/acquisition/AGC:")
+        setnum(idAGC,0,"")
+
+
+        !Turn PZT Cal off
+        idpztc = getid("controls/acquisition/pzt cal:")
+        setnum(idpztc,0,"")
+
+
+        ! set lateral resolution to a default value
+        setcamres( 0.123, "mm" )
+
+        goto Autosetupdone
+    return

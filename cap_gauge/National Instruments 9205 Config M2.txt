@@ -1,0 +1,7 @@
+terminalConfig   =  10106
+minVal           = -10.0
+maxVal           =  10.0
+units            =  10348
+customScaleName  =  None
+
+physicalChannel  =  cDAQ9181-171B281Mod1/ai

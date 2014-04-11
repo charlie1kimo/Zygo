@@ -1,0 +1,77 @@
+db_server='rotr5ws1'
+db = pyodbc.connect("server="+db_server+";dsn=omMeas")
+
+python radius_measure_main.py -f N:\Shared\Users\cchen\radius\radius.cfg
+
+from radius3.parameters import CmdParameters
+from radius3.utilities import OutputBuffer
+from radius3 import utilities
+from radius3 import dmi
+from radius3 import weather_station
+from radius3 import phase_station
+
+printBuffer = OutputBuffer()
+cmdParameters = CmdParameters(printBuffer)
+debug = True
+
+# for wave_shift testing
+cmdParameters.wave_shift = True
+
+# setting up different dmi COM port
+cmdParameters.dmi_info.com_info.com_port = 'COM1'
+
+d = dmi.DMI(cmdParameters.dmi_info, printBuffer, debug)
+ws = weather_station.WeatherStation(cmdParameters.ws_info, d.CTS_IN[cmdParameters.dmi_info.dmi_type], printBuffer, debug)
+# update weather before going
+ws.updateWeather()
+
+# sampling DMI
+d.sampleDMI(100, 'M', 1, True, ws)
+
+### serial port low level DMI sampling test ###
+sample_cmd = d.CONTROL_CODES[d.control_type]["SAMPLE"] % (1, 100, 'M')
+poll_cmd = d.CONTROL_CODES[d.control_type]["POLL"]
+avg_cmd = d.CONTROL_CODES[d.control_type]["AVG"]
+
+d.send(sample_cmd)
+d.send(poll_cmd)
+buffer = d.recv(self.inWaiting())
+
+buffer = self.recv(self.inWaiting())
+
+##### Weather station test #####
+
+import omrun.getprobedata as getprobedata
+import datetime
+
+now = datetime.datetime.now()
+oneHourFromNow = datetime.datetime(now.year, now.month, now.day, now.hour-1, now.minute, now.second)
+getprobedata.getProbeData('T.newport', oneHourFromNow, now)
+
+##### phase station test (Opticode) #####
+
+# MetroPro testing #
+cmdParameters.phase_info.phase_type = "MetroPro"
+cmdParameters.phase_info.ip = "172.18.107.85"
+cmdParameters.phase_info.port = "5001"
+cmdParameters.phase_info.connection_type = "ncacn_ip_tcp"
+
+ps = phase_station.PhaseStation(cmdParameters.phase_info, printBuffer, debug)
+ps.sync()
+ps.go()
+
+##### Print test #####
+outputfile = "N:\\Shared\\Users\\cchen\\test_script.txt"
+import win32api
+import win32print
+win32api.ShellExecute(0, "print", outputfile, '/d:"%s"' % win32print.GetDefaultPrinter(), ".", 0)
+
+
+
+##### MetroPro Script Error #####
+>>> mrc3_client.mrc3_set_script_text(ps.mrc3Handle, script)
+>>> mrc3_client.mrc3_run_script(ps.mrc3Handle, True)
+>>> mrc3_client.mrc3_get_script_output(ps.mrc3Handle)
+'Error executing line 70\n   70   idphavg = getid("controls/phase processing/pha
+se avgs:")\nFunction only usable within a MetroPro application\n'
+>>>

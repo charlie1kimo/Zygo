@@ -1,0 +1,187 @@
+
+                      libmccusb.so  Version 1.0
+                      ----------------------
+
+ Linux Library for the USB devices
+ -------------------------------------
+
+Currently Supporting:
+--------------------
+ 1. USB 1208LS
+ 2. USB 1024LS
+ 3. USB 1024HLS
+ 4. USB 1096HFS
+ 5. USB 1208FS
+ 6. USB 1408FS
+ 7. USB 1608FS
+ 8. USB 1616FS
+ 9. USB 3102
+10. USB 3104
+11. USB 3106
+12. USB 3114
+13. USB 4303
+14. USB 5201
+15. USB ERB
+16. USB PDISO8
+17. USB SSR 08
+18. USB SSR 24
+19. USB TC
+20. USB TC-AI
+21. USB TEMP
+22. USB SSR24
+23. USB DIO24
+24. USB DIO24H
+25. USB DIO96H
+26. Minilab 1008
+
+
+Introduction:
+-------------
+
+This driver was written by Warren J. Jasper at North Carolina State
+University with help from Melih Gunay and Mike Erickson
+(merickson@nc.rr.com) It is a library API for the PMD family of
+devices from Measurement Computing.
+
+Please send comments and bug fixes to wjasper@tx.ncsu.edu.  The source
+for the driver is located at ftp://lx10.tx.ncsu.edu/pub/Linux/drivers/USB.
+
+CURRENTLY, THIS CODE WILL ONLY WORK ON THE 2.6 LINUX KERNEL.  HID is
+not correctly implemented under 2.4.X and will not interface with the
+USB devices.
+
+NOTE: This API uses the Linux HID driver.  Currently, the HID driver
+does not support block transfers of report usages correctly, and has
+severe performance issues, especially compared to the Windows HID driver.
+I welcome any and all feedback on how to imporove the reliability and
+the performance of these drivers.
+
+
+
+Building and installing the driver:
+-----------------------------------
+
+1. Untar the tar file:
+   tar zxvf MCCUSBHID.1.25.tgz
+
+2. This should create the following files:
+    README
+    Makefile
+    License
+    minilab-1008.c
+    minilab-1008.h
+    pmd.c
+    pmd.h
+    test-minilab1008.c
+    test-usb1024LS.c
+    test-usb1096HFS.c
+    test-usb1208FS.c
+    test-usb1208LS.c
+    test-usb1408FS.c
+    test-usb1608FS.c
+    test-usb1616FS.c
+    test-usb3100.c
+    test-usb4300.c
+    test-usb5201.c
+    test-usb-dio24.c
+    test-usb-dio96H.c
+    test-usb-erb.c
+    test-usb-pdiso8.c
+    test-usb-ssr.c
+    test-usb-tc-ai.c
+    test-usb-tc.c
+    test-usb-temp.c
+    usb-1024LS.c
+    usb-1024LS.h
+    usb-1096HFS.c
+    usb-1096HFS.h
+    usb-1208FS.c
+    usb-1208FS.h
+    usb-1208LS.c
+    usb-1208LS.h
+    usb-1408FS.c
+    usb-1408FS.h
+    usb-1608FS.c
+    usb-1608FS.h
+    usb-1616FS.c
+    usb-1616FS.h
+    usb-3100.c
+    usb-3100.h
+    usb-4303.c
+    usb-4303.h
+    usb-5201.c
+    usb-5201.h
+    usb-dio24.c
+    usb-dio24.h
+    usb-dio96H.c
+    usb-dio96H.h
+    usb-erb.c
+    usb-erb.h
+    usb-pdiso8.c
+    usb-pdiso8.h
+    usb-ssr.c
+    usb-ssr.h
+    usb-tc-ai.c
+    usb-tc-ai.h
+    usb-tc.c
+    usb-tc.h
+    usb-temp.c
+    usb-temp.h
+
+3. To make the library type:
+     make
+
+4. To install the library
+     make install
+
+Note:
+-----
+Your kernel needs to be configured with /dev/usb/hiddev support.
+Right now, only woks on the 2.6.X kernels.
+
+If the device nodes are not located in /dev/usb/hiddev*, the please
+edit the code accordingly.
+
+
+Note for udev users
+------------------
+The permissions for /dev/hiddev may not be correct for non-root users.
+These can be changed as:
+
+ chmod 777 /dev/hiddev*
+
+If the case of udev, 
+    cd /etc/udev/permissions.d
+      create a file hiddev.permissions and add the line
+    hiddev*:root:root:777
+
+It may be the case that /dev/hiddev[0-11] is not created.
+Create a file /etc/udev/rules.d/60-hiddev.rules with  the line:
+
+KERNEL=="hiddev*", NAME="hiddev%n",  MODE="0666"
+
+Note for users of Linux kernel 2.6.12 or later
+---------------------------------------------- 
+For kernel verions 2.6.12 and later, two MCC-PMD devices were
+blacklisted: the PMD-1208LS and the PMD-1024LS.  For those 2 devices,
+usblib will not work, as the hiddev device driver is not associted
+with the HID device.  The only workaround I know of currently is to:
+1. Install the kernel-source srpm 
+2. edit /usr/src/linux/drivers/usb/input/hid-core.cand comment the
+lines as shown:
+    //      { USB_VENDOR_ID_MCC, USB_DEVICE_ID_MCC_PMD1024LS, HID_QUIRK_IGNORE },
+    //      { USB_VENDOR_ID_MCC, USB_DEVICE_ID_MCC_PMD1208LS, HID_QUIRK_IGNORE },
+3. remake and install the kernel.
+
+Note on the USB 5201 Temperature device (remote loggin)
+------------------------------------------------------- 
+To do remote logging, the Flash card must be inserted into the device.
+Then run option 'j' to configure logging in the test program
+test-usb5201. Also make sure the time is set using option 'g'.
+Disconnect the device and run it off of the remote power supply, as
+data logging will not function while the device detects activity on
+the USB bus.  Remove the flash card from the device and and insert
+into the Flash Reader.  Mount it (e.g. mount /dev/sdb1 /mnt/flash) and
+you should see a file log00001.bin.  Copy that to the directory where
+you ran test-usb5201.  Reconnect the usb-5201 to the USB bus and rerun
+the test-usb5201.  Run option 'k' to read the file.

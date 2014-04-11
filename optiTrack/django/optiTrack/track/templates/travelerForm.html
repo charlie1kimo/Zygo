@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Traveler's Form{% endblock %}
+
+{% block sidebar %} {% endblock %}
+
+{% block body %}
+	<a href="{% url 'track.views.index' %}">HOME</a>
+	{% if error %}
+		<p><strong>ERROR: {{ error }}</strong></p>
+	{% endif %}
+
+	<h2>Traveler's Form</h2>
+	<form method="post" action="" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{ formset.management_form }}
+		<table id="formset" class="form">
+			{% for form in formset.forms %}
+				{% if forloop.first %}
+					<thead><tr>
+						{% for field in form.visible_fields %}
+							<th class="span1">{{ field.label | capfirst }}</th>
+						{% endfor %}
+					</tr></thead>
+				{% endif %}
+				<tbody><tr>
+					{% for field in form.visible_fields %}
+						<td class="span1">{{ field }}</td>
+					{% endfor %}
+				</tr></tbody>
+			{% endfor %}
+		</table>
+		<input type="submit" value="Submit" name="submit" class="btn btn-primary" />
+	</form>
+{% endblock %}

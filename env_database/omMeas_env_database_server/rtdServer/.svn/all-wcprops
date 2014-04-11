@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/omase/!svn/ver/204/src/omMeas/trunk/omMeas/rtdServer
+END
+Probes.py
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/omase/!svn/ver/201/src/omMeas/trunk/omMeas/rtdServer/Probes.py
+END
+rtdWex.py
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/omase/!svn/ver/201/src/omMeas/trunk/omMeas/rtdServer/rtdWex.py
+END
+SensorCache.py
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/omase/!svn/ver/202/src/omMeas/trunk/omMeas/rtdServer/SensorCache.py
+END
+rtdServer.py
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/omase/!svn/ver/201/src/omMeas/trunk/omMeas/rtdServer/rtdServer.py
+END
+Station.py
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/omase/!svn/ver/201/src/omMeas/trunk/omMeas/rtdServer/Station.py
+END
+niboxProto.py
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/omase/!svn/ver/201/src/omMeas/trunk/omMeas/rtdServer/niboxProto.py
+END
+DbHandler.py
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/omase/!svn/ver/201/src/omMeas/trunk/omMeas/rtdServer/DbHandler.py
+END
+Config.py
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/omase/!svn/ver/201/src/omMeas/trunk/omMeas/rtdServer/Config.py
+END
+ProbePoller.py
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/omase/!svn/ver/206/src/omMeas/trunk/omMeas/rtdServer/ProbePoller.py
+END
+rtdConfig.ini
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/omase/!svn/ver/204/src/omMeas/trunk/omMeas/rtdServer/rtdConfig.ini
+END

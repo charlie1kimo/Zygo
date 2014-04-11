@@ -1,0 +1,12 @@
+# This is comment
+$ Title1: This is the first thing to do.
+and the first sub thing to do.
+$ Title2: This is the second thing to do.
+and the first sub thing to do.
+and the third sub thing to do.
+and the fourth sub thing to do.
+$ - DO IMPORTANT THING 1
+ - DO IMPORTANT THING 2
+ - DO IMPORTANT THING 3:
+first sub
+second sub
